@@ -1,0 +1,16 @@
+[
+{
+  "modid": "elytraboost",
+  "name": "Elytra Boost",
+  "description": "Adds a keybind to let you increase velocity while flying with elytra. May require the gamerule disableCheckElytraMovement to be true",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ZoeyOW"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
