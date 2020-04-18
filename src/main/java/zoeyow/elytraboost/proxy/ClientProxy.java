@@ -18,9 +18,12 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
-        keyBindings = new KeyBinding[1];
+        keyBindings = new KeyBinding[2];
 
+        //used to provide an impulse (boost) towards facing direction
         keyBindings[0] = new KeyBinding("binding.boost.description", Keyboard.KEY_B, "binding.boost.category");
+        //used to switch on / off elytra flight
+        keyBindings[1] = new KeyBinding("binding.toggleElytraFlight.description", Keyboard.KEY_R, "binding.boost.category");
 
         for (int i = 0; i < keyBindings.length; ++i)
         {

@@ -1,5 +1,6 @@
 package zoeyow.elytraboost.proxy;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -8,6 +9,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import zoeyow.elytraboost.Config;
 import zoeyow.elytraboost.ModInfo;
+import zoeyow.elytraboost.eventhandlers.CommonEventHandler;
+import zoeyow.elytraboost.eventhandlers.ServerEventHandler;
 import zoeyow.elytraboost.networking.ElytraBoostPacketHandler;
 import zoeyow.elytraboost.networking.VelocityAddMessage;
 
@@ -25,12 +28,13 @@ public class CommonProxy {
     }
 
     public void init(FMLInitializationEvent e) {
+        MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
     }
 
     public void postInit(FMLPostInitializationEvent e) {
         if (config.hasChanged()) {
             config.save();
         }
-        ElytraBoostPacketHandler.INSTANCE.registerMessage(VelocityAddMessage.VelocityAddMessageHandler.class, VelocityAddMessage.class, 0, Side.SERVER);
+        ElytraBoostPacketHandler.register();
     }
 }
