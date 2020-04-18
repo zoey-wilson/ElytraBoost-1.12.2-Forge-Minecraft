@@ -2,6 +2,10 @@ package zoeyow.elytraboost.networking;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemElytra;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -34,9 +38,12 @@ public class ToggleElytraMessage implements IMessage {
         public IMessage onMessage(ToggleElytraMessage message, MessageContext ctx) {
             EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 
-            if (serverPlayer.isElytraFlying() && !message.toggleElytra) {
+            ItemStack itemstack = serverPlayer.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+            if (serverPlayer.isElytraFlying() && !message.toggleElytra
+                    && itemstack.getItem() == Items.ELYTRA && ItemElytra.isUsable(itemstack)) {
                 serverPlayer.getServerWorld().addScheduledTask(serverPlayer::clearElytraFlying);
-            } else if (!serverPlayer.isElytraFlying() && message.toggleElytra) {
+            } else if (!serverPlayer.isElytraFlying() && message.toggleElytra
+                    && itemstack.getItem() == Items.ELYTRA && ItemElytra.isUsable(itemstack)) {
                 serverPlayer.getServerWorld().addScheduledTask(serverPlayer::setElytraFlying);
             }
             //serverPlayer.sendMessage(new TextComponentString("toggle elytra received"));
