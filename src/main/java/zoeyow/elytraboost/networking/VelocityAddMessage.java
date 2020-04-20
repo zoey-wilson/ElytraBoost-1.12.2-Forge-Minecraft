@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import zoeyow.elytraboost.Config;
 
-
+//this message is used to send players' impulsion request to server
 public class VelocityAddMessage implements IMessage {
     private float clientVelocityMultiplier;
 
@@ -39,7 +39,6 @@ public class VelocityAddMessage implements IMessage {
         public IMessage onMessage(VelocityAddMessage message, MessageContext ctx) {
             EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
 
-
             if (serverPlayer.isElytraFlying() && !Config.serverOverride) {
                 double clientVelocityMultiplierValue = message.clientVelocityMultiplier;
 
@@ -61,9 +60,7 @@ public class VelocityAddMessage implements IMessage {
                 double yValue = serverPlayer.getLookVec().y * Config.velocityToAdd;
                 double zValue = serverPlayer.getLookVec().z * Config.velocityToAdd;
 
-
                 serverPlayer.getServerWorld().addScheduledTask(() -> {
-
 
                     serverPlayer.addVelocity(xValue, yValue, zValue);
                     if (serverPlayer instanceof EntityPlayerMP) {
@@ -73,7 +70,8 @@ public class VelocityAddMessage implements IMessage {
 
                 });
             } else if (!serverPlayer.isElytraFlying()) {
-                serverPlayer.sendMessage(new TextComponentString(TextFormatting.RED + serverPlayer.getName() + TextFormatting.RESET + " " + I18n.format("=The servereventhandler doesn't think you're using an elytra... so no boost for you")));
+                //do not send message
+                //serverPlayer.sendMessage(new TextComponentString(TextFormatting.RED + serverPlayer.getName() + TextFormatting.RESET + " " + I18n.format("=The servereventhandler doesn't think you're using an elytra... so no boost for you")));
             }
             return null;
         }
