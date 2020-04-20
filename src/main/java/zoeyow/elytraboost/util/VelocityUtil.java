@@ -14,7 +14,7 @@ public class VelocityUtil {
                                                float accelerationProportion, float decelerationProportion,
                                                float sprintingFactor) {
         if (player.isSprinting()) {
-            velocityCap *= MathHelper.clamp(sprintingFactor, 0.0f, 10.0f);
+            velocityCap *= sprintingFactor;
         }
         Vec3d velocity = new Vec3d(player.motionX, player.motionY, player.motionZ);
         Vec3d velocityParallel = player.getLookVec().scale(velocity.dotProduct(player.getLookVec()));

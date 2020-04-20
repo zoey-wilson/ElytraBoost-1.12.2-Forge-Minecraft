@@ -9,6 +9,7 @@ import zoeyow.elytraboost.Config;
 import zoeyow.elytraboost.util.VelocityUtil;
 
 public class CommonEventHandler {
+    //the legal way is sync the config to client and handle motion client side
     //deprecated, still don't know what's the 'legal' way to modify player motion, so just leave it here.
     /*
     @SubscribeEvent

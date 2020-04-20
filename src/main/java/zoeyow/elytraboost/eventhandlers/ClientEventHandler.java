@@ -31,6 +31,8 @@ public class ClientEventHandler {
         EntityPlayer player = Minecraft.getMinecraft().player;
         //give player an impulse when pressing a key during elytra flight
         if (keyBindings[0].isPressed()) {
+            //with the config syncing system, motion can be handled client side
+            /*
             if (!Config.ignoreServer) {
                 if (player.isElytraFlying()) {
                     ElytraBoostPacketHandler.INSTANCE.sendToServer(new VelocityAddMessage(Config.velocityToAdd));
@@ -48,7 +50,14 @@ public class ClientEventHandler {
                     //do not send message
                     //player.sendMessage(new TextComponentTranslation("feedback.boost.fail"));
                 }
-
+            }
+            */
+            //now the calculation uses the client set of variables
+            if (player.isElytraFlying()) {
+                double xValue = player.getLookVec().x * MathHelper.clamp(Config.velocityToAddClient, 0.1, 10);
+                double yValue = player.getLookVec().y * MathHelper.clamp(Config.velocityToAddClient, 0.1, 10);
+                double zValue = player.getLookVec().z * MathHelper.clamp(Config.velocityToAddClient, 0.1, 10);
+                player.addVelocity(xValue, yValue, zValue);
             }
         }
         //a key to switch flight state, enabling player to use elytra whenever he want and quit elytra flight mid-air
@@ -63,11 +72,17 @@ public class ClientEventHandler {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onPlayerUpdate(TickEvent.PlayerTickEvent event) {
+        //added this check to prevent event being triggered twice a tick
+        if (event.phase != TickEvent.Phase.END) {
+            return;
+        }
         EntityPlayer player = event.player;
         if (!player.isElytraFlying()) {
             return;
         }
+        //with the config syncing system, motion can be handled client side
         //this should be done at client side, otherwise game will become way too laggy due to frequent messages?
+        /*
         if (!Config.ignoreServer) {
             ElytraBoostPacketHandler.INSTANCE.sendToServer(new ExtraMotionMessage(
                     player.moveForward, Config.velocityCap,
@@ -78,5 +93,11 @@ public class ClientEventHandler {
                     Config.accelerationProportion, Config.decelerationProportion, Config.sprintingFactor);
             player.addVelocity(velocityToAdd.x, velocityToAdd.y, velocityToAdd.z);
         }
+        */
+        //now the calculation uses the client set of variables
+        Vec3d velocityToAdd = VelocityUtil.calculateVelocityToAdd(
+                player, player.moveForward, Config.velocityCapClient,
+                Config.accelerationProportionClient, Config.decelerationProportionClient, Config.sprintingFactorClient);
+        player.addVelocity(velocityToAdd.x, velocityToAdd.y, velocityToAdd.z);
     }
 }

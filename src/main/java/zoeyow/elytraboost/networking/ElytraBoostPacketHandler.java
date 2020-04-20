@@ -15,5 +15,7 @@ public class ElytraBoostPacketHandler {
                 ExtraMotionMessage.ExtraMotionMessageHandler.class, ExtraMotionMessage.class, 1, Side.SERVER);
         INSTANCE.registerMessage(
                 ToggleElytraMessage.ToggleElytraMessageHandler.class, ToggleElytraMessage.class, 2, Side.SERVER);
+        INSTANCE.registerMessage(
+                ConfigSyncMessage.ConfigSyncMessageHandler.class, ConfigSyncMessage.class, 3, Side.CLIENT);
     }
 }

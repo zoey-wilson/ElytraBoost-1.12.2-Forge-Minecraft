@@ -10,6 +10,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import zoeyow.elytraboost.Config;
 import zoeyow.elytraboost.util.VelocityUtil;
 
+/**
+ * with the config syncing, motion can be totally handle on client side, so this message is no more needed
+*/
 //this message is used for players to send their attempt to accelerate or decelerate to server when ignore server is false
 //still, passing packets every tick to keep player motion in sync feels laggy in game.
 public class ExtraMotionMessage implements IMessage {
