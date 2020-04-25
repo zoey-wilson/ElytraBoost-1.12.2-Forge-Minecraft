@@ -17,13 +17,16 @@ public class ConfigSyncMessage implements IMessage {
     private float accelerationProportionServer;
     private float decelerationProportionServer;
     private float sprintingFactorServer;
+    private boolean applyExhaustionServer;
+    private float exhaustionFactorServer;
 
     public ConfigSyncMessage() {
     }
 
     public ConfigSyncMessage(float velocityToAddServer, boolean serverOverrideServer, boolean ignoreServerServer,
                              float velocityCapServer, float accelerationProportionServer,
-                             float decelerationProportionServer, float sprintingFactorServer) {
+                             float decelerationProportionServer, float sprintingFactorServer,
+                             boolean applyExhaustionServer, float exhaustionFactorServer) {
         this.velocityToAddServer = velocityToAddServer;
         this.serverOverrideServer = serverOverrideServer;
         this.ignoreServerServer = ignoreServerServer;
@@ -31,6 +34,8 @@ public class ConfigSyncMessage implements IMessage {
         this.accelerationProportionServer = accelerationProportionServer;
         this.decelerationProportionServer = decelerationProportionServer;
         this.sprintingFactorServer = sprintingFactorServer;
+        this.applyExhaustionServer = applyExhaustionServer;
+        this.exhaustionFactorServer = exhaustionFactorServer;
     }
 
     @Override
@@ -42,6 +47,8 @@ public class ConfigSyncMessage implements IMessage {
         accelerationProportionServer = buf.readFloat();
         decelerationProportionServer = buf.readFloat();
         sprintingFactorServer = buf.readFloat();
+        applyExhaustionServer = buf.readBoolean();
+        exhaustionFactorServer = buf.readFloat();
     }
 
     @Override
@@ -53,6 +60,8 @@ public class ConfigSyncMessage implements IMessage {
         buf.writeFloat(accelerationProportionServer);
         buf.writeFloat(decelerationProportionServer);
         buf.writeFloat(sprintingFactorServer);
+        buf.writeBoolean(applyExhaustionServer);
+        buf.writeFloat(exhaustionFactorServer);
     }
 
     public static class ConfigSyncMessageHandler implements IMessageHandler<ConfigSyncMessage, IMessage> {
@@ -62,7 +71,8 @@ public class ConfigSyncMessage implements IMessage {
             if (message.serverOverrideServer || !Config.ignoreServer) {
                 Config.syncClientConfigVariables(message.velocityToAddServer, message.serverOverrideServer,
                         message.ignoreServerServer, message.velocityCapServer, message.accelerationProportionServer,
-                        message.decelerationProportionServer, message.sprintingFactorServer);
+                        message.decelerationProportionServer, message.sprintingFactorServer,
+                        message.applyExhaustionServer, message.exhaustionFactorServer);
             }
             return null;
         }

@@ -14,10 +14,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zoeyow.elytraboost.Config;
-import zoeyow.elytraboost.networking.ElytraBoostPacketHandler;
-import zoeyow.elytraboost.networking.ExtraMotionMessage;
-import zoeyow.elytraboost.networking.ToggleElytraMessage;
-import zoeyow.elytraboost.networking.VelocityAddMessage;
+import zoeyow.elytraboost.networking.*;
 import zoeyow.elytraboost.proxy.ClientProxy;
 import zoeyow.elytraboost.util.VelocityUtil;
 
@@ -99,5 +96,13 @@ public class ClientEventHandler {
                 player, player.moveForward, Config.velocityCapClient,
                 Config.accelerationProportionClient, Config.decelerationProportionClient, Config.sprintingFactorClient);
         player.addVelocity(velocityToAdd.x, velocityToAdd.y, velocityToAdd.z);
+        //tell the server to apply exhaustion to player
+        /**
+         * remember to use CLIENT set of variables! (a note to my self) !!!!!!
+         */
+        if (Config.applyExhaustion && player.moveForward > 0) {
+            ElytraBoostPacketHandler.INSTANCE.sendToServer(new
+                    ApplyExhaustionMessage(Config.exhaustionFactorClient * (float) velocityToAdd.lengthVector()));
+        }
     }
 }

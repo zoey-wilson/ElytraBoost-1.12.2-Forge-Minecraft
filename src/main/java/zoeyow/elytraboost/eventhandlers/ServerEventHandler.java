@@ -18,7 +18,8 @@ public class ServerEventHandler {
         ElytraBoostPacketHandler.INSTANCE.sendTo(
                 new ConfigSyncMessage(Config.velocityToAdd, Config.serverOverride, Config.ignoreServer,
                         Config.velocityCap, Config.accelerationProportion,
-                        Config.decelerationProportion, Config.sprintingFactor),
+                        Config.decelerationProportion, Config.sprintingFactor,
+                        Config.applyExhaustion, Config.exhaustionFactor),
                 (EntityPlayerMP) event.player);
     }
 }
