@@ -2,7 +2,7 @@ package zoeyow.elytraboost;
 
 public class ModInfo {
     public static final String MODID = "elytraboost";
-    public static final String MODVERSION = "1.12.2 - 3.1.4";
+    public static final String MODVERSION = "1.12.2 - 3.1.5";
     public static final String MODNAME = "Elytra Boost";
 }
 

@@ -19,7 +19,7 @@ public class Config {
     public static float decelerationProportion = 0.06f;
     public static float sprintingFactor = 1.33f;
     public static boolean applyExhaustion = true;
-    public static float exhaustionFactor = 0.1f;
+    public static float exhaustionFactor = 0.8f;
 
     //this is the set of variables that are synced when logging in a world, intended to be used client side
     public static float velocityToAddClient = 0.5f;
@@ -31,7 +31,7 @@ public class Config {
     public static float decelerationProportionClient = 0.06f;
     public static float sprintingFactorClient = 1.33f;
     public static boolean applyExhaustionClient = true;
-    public static float exhaustionFactorClient = 0.1f;
+    public static float exhaustionFactorClient = 0.8f;
 
     // Call this from CommonProxy.preInit(). It will create our config if it doesn't
     // exist yet and read the values if it does exist.
